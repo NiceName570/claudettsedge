@@ -38,7 +38,7 @@ A Claude Code plugin that reads Claude's replies out loud using Microsoft Edge's
 **Stopping audio mid-sentence:** just send a message.
 
 - A normal message stops the audio and Claude answers as usual.
-- A **single character** (like `k` or `.`) or the word **`ss`** is a pure stop signal: audio stops, Claude only replies "Stopped.", and nothing is spoken.
+- The message **`ss`** is a pure stop signal: audio stops, Claude only replies "Stopped.", and nothing is spoken.
 
 Settings are saved and kept across sessions.
 
@@ -78,7 +78,7 @@ The written reply on screen is never changed; numbers and paths are always there
 | --- | --- |
 | `hooks/hooks.json` | Registers the two hooks |
 | `scripts/hook_speak.py` | Stop hook — finds the last reply and speaks it |
-| `scripts/hook_stop.py` | UserPromptSubmit hook — stops audio; handles the 1-character stop signal |
+| `scripts/hook_stop.py` | UserPromptSubmit hook — stops audio; handles the `ss` stop signal |
 | `scripts/speak.py` | The filter, edge-tts call and Windows audio player |
 | `scripts/ttsctl.py` | Backend for the `/tts*` commands |
 | `scripts/tts_common.py` | Shared settings, dependency installer, stop logic |

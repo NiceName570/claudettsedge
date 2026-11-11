@@ -32,7 +32,7 @@ def main() -> int:
         data = json.load(sys.stdin)
     except ValueError:
         return 0
-    if SKIP_FILE.exists():                      # turn was a 1-character stop signal
+    if SKIP_FILE.exists():                      # turn was an "ss" stop signal or a /tts command
         SKIP_FILE.unlink(missing_ok=True)
         return 0
     if data.get("stop_hook_active") or not load_config()["enabled"]:

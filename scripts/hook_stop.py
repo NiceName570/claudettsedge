@@ -1,6 +1,6 @@
 """UserPromptSubmit hook: stop audio if it is still talking. Never disables speech.
 
-A 1-character message, or the word "ss", is a pure stop signal: Claude is told
+The message "ss" is a pure stop signal: Claude is told
 not to reply, and the speak hook is told to skip that turn (so the old reply is
 not re-spoken).
 
@@ -25,7 +25,7 @@ stopped = stop_playback()
 prompt = (data.get("prompt") or "").strip()
 STOPPED_FILE.unlink(missing_ok=True)
 
-if len(prompt) <= 1 or prompt.lower() == "ss":
+if prompt.lower() == "ss":
     SKIP_FILE.write_text("1")
     print(json.dumps({"hookSpecificOutput": {
         "hookEventName": "UserPromptSubmit",
