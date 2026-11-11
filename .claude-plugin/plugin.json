@@ -1,0 +1,5 @@
+{
+  "name": "claudettsedge",
+  "version": "0.1.0",
+  "description": "Speaks a short summary of Claude's replies with edge-tts."
+}

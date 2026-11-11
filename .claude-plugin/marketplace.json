@@ -1,0 +1,7 @@
+{
+  "name": "claudettsedge",
+  "owner": { "name": "crucial" },
+  "plugins": [
+    { "name": "claudettsedge", "source": "./", "description": "Speaks a short summary of Claude's replies with edge-tts." }
+  ]
+}
