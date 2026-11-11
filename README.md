@@ -1,3 +1,5 @@
+![TTS Reader for Claude](docs/images/banner.webp)
+
 # claudettsedge
 
 A Claude Code plugin that reads Claude's replies out loud using Microsoft Edge's free neural voices ([edge-tts](https://github.com/rany2/edge-tts)).
