@@ -28,6 +28,7 @@ A Claude Code plugin that reads Claude's replies out loud using Microsoft Edge's
 | --- | --- |
 | `/tts on` | Turn spoken replies on (default) |
 | `/tts off` | Turn spoken replies off and stop any audio playing |
+| `/tts stop` | Stop current audio without changing the on/off setting |
 | `/tts-voice ava` | Use Ava — warm, natural female voice (default) |
 | `/tts-voice aria` | Use Aria — clear, confident female voice |
 | `/tts-speed +20%` | Speak faster (any `+N%`) |

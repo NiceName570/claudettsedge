@@ -1,4 +1,4 @@
-"""Settings control: on | off | voice <ava|aria> | speed <+N%|-N%|normal> | status"""
+"""Settings control: on | off | stop | voice <ava|aria> | speed <+N%|-N%|normal> | status"""
 import re
 import sys
 
@@ -19,6 +19,8 @@ def main(argv) -> int:
         cfg["enabled"] = False
         stop_playback()
         msg = "Speech is off."
+    elif cmd == "stop":
+        msg = "Stopped speech." if stop_playback() else "Nothing was playing."
     elif cmd == "voice":
         name = (rest[0].lower() if rest else "")
         if name not in VOICES:
