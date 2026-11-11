@@ -19,10 +19,12 @@ AUDIO_FILE = CONFIG_DIR / "last.mp3"
 PATH_RE = re.compile(
     r"[A-Za-z]:\\"                      # C:\
     r"|(?:^|\s)[~.]?[\\/]\w+[\\/]"      # /foo/, ./foo/, ~/foo/ (not /tts commands)
-    r"|\w[\\/]\w"                       # foo/bar, foo\bar
+    r"|\w\\\w"                          # foo\bar
+    r"|\w/\w+/\w"                       # foo/bar/baz (not on/off, and/or)
     r"|\b\w+\.(?:py|md|json|js|ts|tsx|txt|html|css|ps1|sh|exe|toml|yaml|yml|mp3)\b"
     r"|https?://"
 )
+LIST_RE = re.compile(r"^(?:[-*+]|\d+[.)])\s+")
 
 
 def strip_markdown(s: str) -> str:
@@ -35,7 +37,8 @@ def strip_markdown(s: str) -> str:
 
 def build_summary(text: str) -> str:
     """Keep clean sentences; drop any with numbers or paths. Add the cue only if
-    something with a number or path was actually dropped."""
+    something listed was dropped: a code block, table row or list item holding
+    a number or path. Ordinary sentences are dropped silently."""
     skipped = False
 
     def has_detail(s: str) -> bool:
@@ -53,12 +56,14 @@ def build_summary(text: str) -> str:
         if line.startswith("|"):                     # table row: never spoken
             skipped = skipped or has_detail(line)
             continue
-        for sentence in re.split(r"(?<=[.!?])\s+", line):
+        item = LIST_RE.sub("", line)                 # drop "- " / "1. " marker
+        is_item = item != line
+        for sentence in re.split(r"(?<=[.!?])\s+", item):
             sentence = sentence.replace("`", "")
             if not sentence:
                 continue
             if has_detail(sentence):
-                skipped = True
+                skipped = skipped or is_item
                 continue
             clean = strip_markdown(sentence)
             if clean:
