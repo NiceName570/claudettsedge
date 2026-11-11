@@ -38,7 +38,7 @@ A Claude Code plugin that reads Claude's replies out loud using Microsoft Edge's
 **Stopping audio mid-sentence:** just send a message.
 
 - A normal message stops the audio and Claude answers as usual.
-- A **single character** (like `k` or `.`) is a pure stop signal: audio stops, Claude only replies "Stopped.", and nothing is spoken.
+- A **single character** (like `k` or `.`) or the word **`ss`** is a pure stop signal: audio stops, Claude only replies "Stopped.", and nothing is spoken.
 
 Settings are saved and kept across sessions.
 

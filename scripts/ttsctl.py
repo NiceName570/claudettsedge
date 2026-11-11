@@ -2,7 +2,20 @@
 import re
 import sys
 
-from tts_common import VOICES, load_config, save_config, stop_playback
+import time
+
+from tts_common import (SKIP_FILE, STOPPED_FILE, VOICES, load_config, save_config,
+                        stop_playback)
+
+
+def hook_just_stopped() -> bool:
+    """True if the prompt hook stopped audio for this command a moment ago."""
+    try:
+        fresh = time.time() - STOPPED_FILE.stat().st_mtime < 30
+    except OSError:
+        return False
+    STOPPED_FILE.unlink(missing_ok=True)
+    return fresh
 
 
 def main(argv) -> int:
@@ -20,7 +33,8 @@ def main(argv) -> int:
         stop_playback()
         msg = "Speech is off."
     elif cmd == "stop":
-        msg = "Stopped speech." if stop_playback() else "Nothing was playing."
+        stopped = stop_playback() or hook_just_stopped()
+        msg = "Stopped speech." if stopped else "Nothing was playing."
     elif cmd == "voice":
         name = (rest[0].lower() if rest else "")
         if name not in VOICES:
@@ -48,6 +62,7 @@ def main(argv) -> int:
         return 1
 
     save_config(cfg)
+    SKIP_FILE.write_text("1")   # a settings confirmation is never spoken
     print(msg)
     return 0
 

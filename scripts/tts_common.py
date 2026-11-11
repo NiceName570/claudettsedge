@@ -8,6 +8,7 @@ CONFIG_DIR = Path.home() / ".claude" / "claudettsedge"
 CONFIG_FILE = CONFIG_DIR / "config.json"
 PID_FILE = CONFIG_DIR / "player.pid"
 SKIP_FILE = CONFIG_DIR / "skip_next"
+STOPPED_FILE = CONFIG_DIR / "just_stopped"   # prompt hook stopped audio for a /tts command
 
 VOICES = {
     "ava": "en-US-AvaMultilingualNeural",
