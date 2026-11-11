@@ -9,7 +9,7 @@ Claude Code reads its replies to you out loud, using Microsoft Edge's free neura
 You need **Python 3.9+** ([python.org](https://www.python.org/downloads/), tick *Add to PATH*). Then, in Claude Code:
 
 ```
-/plugin marketplace add <github-user>/claudettsedge
+/plugin marketplace add NiceName570/claudettsedge
 /plugin install claudettsedge@claudettsedge
 ```
 
