@@ -11,7 +11,7 @@ import re
 import subprocess
 import sys
 
-from tts_common import CONFIG_DIR, load_config, stop_playback, PID_FILE
+from tts_common import CONFIG_DIR, PID_FILE, ensure_edge_tts, load_config, stop_playback
 
 CUE = "Below I've listed the numbers and directories."
 AUDIO_FILE = CONFIG_DIR / "last.mp3"
@@ -70,7 +70,7 @@ def build_summary(text: str) -> str:
 
 
 async def synth(text: str, voice: str, rate: str) -> None:
-    import edge_tts
+    edge_tts = ensure_edge_tts()
     await edge_tts.Communicate(text, voice, rate=rate).save(str(AUDIO_FILE))
 
 
