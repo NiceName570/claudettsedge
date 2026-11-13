@@ -61,14 +61,16 @@ You send a message ──► UserPromptSubmit hook ──► kills the player �
 2. A sentence is **skipped** if it contains a number, a file path (`C:\…`, `folder/sub/`, `file.py`), or a URL.
 3. Code blocks and tables are never spoken.
 4. Markdown (bold, headers, bullets, link syntax) is stripped; words in `backticks` are read normally.
-5. If anything with numbers or paths was skipped, it adds once at the end:
+5. If a code block or table with numbers or paths was skipped, it adds once at the end (plain sentences and bullet points are skipped silently):
    > "Below I've listed the numbers and directories."
 
 **Example**
 
 > The plugin is built. It's in `C:\Projects\claudettsedge`. 3 tests passed. Next we add hooks.
 
-🔊 *"The plugin is built. Next we add hooks. Below I've listed the numbers and directories."*
+🔊 *"The plugin is built. Next we add hooks."*
+
+Had that reply also contained a code block or table with numbers or paths, the cue would follow.
 
 The written reply on screen is never changed; numbers and paths are always there to read.
 
@@ -128,7 +130,7 @@ To create the audio, the **filtered sentences** are sent to Microsoft's online E
 | **`python` is not recognized** | Reinstall Python with "Add to PATH" ticked, or make sure the `py` launcher is installed. |
 | **Typing `python` opens the Microsoft Store** | Settings → Apps → Advanced app settings → App execution aliases → turn off the `python.exe` aliases, then install Python from python.org. |
 | **First reply is silent / slow** | Normal on first use while edge-tts installs (~10 s). If it times out, the next reply will speak. |
-| **It keeps saying "Below I've listed the numbers and directories"** | That reply had sentences with numbers or paths; they're on screen. |
+| **It keeps saying "Below I've listed the numbers and directories"** | That reply had a code block or table with numbers or paths; it's on screen. |
 | **Audio overlaps or won't stop** | Send any message. If stuck, delete `%USERPROFILE%\.claude\claudettsedge\player.pid` and close stray `powershell.exe` processes in Task Manager. |
 | **Voice won't change** | Only `ava` and `aria` are supported. Run `/tts-voice ava`. |
 | **Reset everything** | Delete `%USERPROFILE%\.claude\claudettsedge\` — defaults return and edge-tts reinstalls on next use. |

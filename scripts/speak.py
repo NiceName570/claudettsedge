@@ -37,8 +37,8 @@ def strip_markdown(s: str) -> str:
 
 def build_summary(text: str) -> str:
     """Keep clean sentences; drop any with numbers or paths. Add the cue only if
-    something listed was dropped: a code block, table row or list item holding
-    a number or path. Ordinary sentences are dropped silently."""
+    a code block or table row holding a number or path was dropped. Sentences
+    and list items are dropped silently."""
     skipped = False
 
     def has_detail(s: str) -> bool:
@@ -57,13 +57,11 @@ def build_summary(text: str) -> str:
             skipped = skipped or has_detail(line)
             continue
         item = LIST_RE.sub("", line)                 # drop "- " / "1. " marker
-        is_item = item != line
         for sentence in re.split(r"(?<=[.!?])\s+", item):
             sentence = sentence.replace("`", "")
             if not sentence:
                 continue
             if has_detail(sentence):
-                skipped = skipped or is_item
                 continue
             clean = strip_markdown(sentence)
             if clean:
